@@ -1,6 +1,6 @@
 app:
   kind: production
-  port: 8080
+  port: 8081
 
 db:
   mongo:
@@ -8,13 +8,6 @@ db:
     password: root
     host: mongo
     port: 27017
-    name: todo_template
+    name: carrier_development
     auth: admin
-    collection: todo
-
-queue:
-  connection:
-    username: guest
-    password: guest
-    host: rabbitmq
-    port: 5672
+    collection: carrier_account
