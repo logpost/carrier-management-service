@@ -25,6 +25,6 @@ db:
     password: root
     host: localhost
     port: 27017
-    name: carrier_development
+    name: logpost
     auth: admin
     collection: carrier_account
