@@ -16,8 +16,8 @@ jwt:
       jwt_secret: logpostprivateroute
     options:
       expires_in: 30d
-      issuer: poonsht
-      audience: poonsht
+      issuer: logpost
+      audience: logpost
 
 db:
   mongo:
