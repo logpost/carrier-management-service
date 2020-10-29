@@ -1,9 +1,12 @@
 import App from './app'
-import CarrierRoutes from './routes/carrier.route'
+
 import AuthPlugin from './plugins/auth.plugin'
 
+import CarrierRoutes from './routes/carrier.route'
+import TruckRoute from './routes/truck.route'
+
 const app = new App({
-  routes: [CarrierRoutes],
+  routes: [CarrierRoutes, TruckRoute],
   plugins: [AuthPlugin],
 })
 

@@ -1,11 +1,11 @@
 export interface TruckTypeInterface {
-    wheel: number
-    is_container: boolean
+    wheel?: number
+    is_container?: boolean
 }
 
 export interface TruckWeightInterface { 
-    max: number
-    min: number
+    max?: number
+    min?: number
 }
 
 export interface TruckInterface { 
@@ -17,5 +17,5 @@ export interface TruckInterface {
     type: TruckTypeInterface
     weight: TruckWeightInterface
     created_at: Date
-    updated_at: Date 
+    updated_at: Date
 }

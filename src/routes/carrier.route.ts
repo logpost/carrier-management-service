@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import CarrierUsecase from '../usecase/carrier.usecase'
 import responseHandler from '../helper/response.handler'
 import { Payload } from '../entities/dtos/token.dto'
-import { createDTO, confirmedEmailDTO,  deleteDTO, identifierDTO, updateProfileDTO , whitelistupdateProfileDTO} from '../entities/dtos/carrier.dto'
+import { createDTO, confirmedEmailDTO,  deleteDTO, identifierDTO , whitelistupdateProfileDTO} from '../entities/dtos/carrier.dto'
 import * as Validator from '../helper/validate.helper'
 
 class CarrierRoutes {
@@ -99,7 +99,7 @@ class CarrierRoutes {
       await reply
     })
 
-    fastify.put(`/update`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.put(`/profile/update`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
       responseHandler(async () => {
         const { username } = request.user as Payload
         const identifier: identifierDTO  = { username }
@@ -120,9 +120,7 @@ class CarrierRoutes {
     })
 
     done()
-
   }
-
 }
 
 export default CarrierRoutes

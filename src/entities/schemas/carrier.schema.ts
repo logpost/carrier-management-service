@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose'
-import Truck from './truck.schema'
-import Driver from './driver.schema'
+import TruckSchema from './truck.schema'
+import DriverSchema from './driver.schema'
 
 export const CarrierSchema = new mongoose.Schema(
 	{
@@ -15,8 +15,8 @@ export const CarrierSchema = new mongoose.Schema(
 		email: { type: String, default: 'not_confirm', trim: true },
 		tel: { type: String, default: null, trim: true },
 		juristic_id: { type: String, default: null, trim: true },
-		trucks: { type: [ Truck ]},
-		driver: { type: [ Driver ]}
+		trucks: { type: [ TruckSchema ], default: []},
+		driver: { type: [ DriverSchema ], default: []}
 	},
 	{
 		versionKey: false,

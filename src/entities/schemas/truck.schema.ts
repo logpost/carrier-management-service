@@ -2,8 +2,8 @@ import * as mongoose from 'mongoose'
 
 const TruckTypeSchema = new mongoose.Schema(
     {
-            wheel: { type: Number, require: true, default: 4 },
-            is_container: { type: Boolean, require: true, default: false},
+        wheel: { type: Number, require: true, default: 4 },
+        is_container: { type: Boolean, require: true, default: false},
     },
     {
         _id: false,
