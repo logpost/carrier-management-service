@@ -16,7 +16,7 @@ async function createDriver(username: string, driverinfo: createDriverDTO): Prom
       return `201 : Create driver is successfully`
     } catch (err) {
         console.log(err)
-      throw new Error(`400 : Save data is not successfully`)
+      throw new Error(`400 : Create driver is not successfully`)
     } 
   }
   throw new Error(`400 : Driver is existing, create driver didn't successfully`)

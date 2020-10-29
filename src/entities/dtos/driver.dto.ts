@@ -11,7 +11,7 @@ interface deleteDriverDTO {
     driver_id: string
 }
 
-interface whitelistupdateDriverDTO {
+interface whitelistUpdateDriverDTO {
     name?: string
     age?: number
     driver_license?: string
@@ -21,7 +21,7 @@ interface whitelistupdateDriverDTO {
 
 interface updateDriverDTO {
     driver_id: string
-    driverinfo: whitelistupdateDriverDTO
+    driverinfo: whitelistUpdateDriverDTO
 }
 
-export { createDriverDTO, updateDriverDTO, whitelistupdateDriverDTO, deleteDriverDTO} 
+export { createDriverDTO, updateDriverDTO, whitelistUpdateDriverDTO, deleteDriverDTO} 

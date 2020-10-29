@@ -12,22 +12,22 @@ class DriverRoute {
 
         fastify.post(`/create`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
             responseHandler(async () => {
-              const { username } = request.user as Payload
-              const driverinfo : createDriverDTO = request.body as createDriverDTO   
-              const data = await DriverUsecase.createDriver(username, driverinfo)
-              return data
+                const { username } = request.user as Payload
+                const driverinfo : createDriverDTO = request.body as createDriverDTO   
+                const data = await DriverUsecase.createDriver(username, driverinfo)
+                return data
             }, reply)
             await reply
-          })
+        })
           
         fastify.put(`/update`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
-        responseHandler(async () => {
-            const { username } = request.user as Payload
-            const driver: updateDriverDTO = request.body as updateDriverDTO   
-            const data = await DriverUsecase.updateDriver(username, driver)
-            return data
-        }, reply)
-        await reply
+            responseHandler(async () => {
+                const { username } = request.user as Payload
+                const driver: updateDriverDTO = request.body as updateDriverDTO   
+                const data = await DriverUsecase.updateDriver(username, driver)
+                return data
+            }, reply)
+            await reply
         })
 
         fastify.delete(`/delete`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {

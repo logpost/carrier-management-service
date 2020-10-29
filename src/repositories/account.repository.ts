@@ -98,7 +98,6 @@ class AccountRepository {
     }
 
     public async createDriverByUsername(username: string, driverinfo: createDriverDTO): Promise<string> {
-        console.log(username, driverinfo)
         const { driver_id } = await this._model.update({ username }, { $push: { "drivers" : driverinfo as any } })
         return driver_id
     }

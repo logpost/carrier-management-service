@@ -13,7 +13,7 @@ interface deleteTruckDTO {
     truck_id: string
 }
 
-interface whitelistupdateTruckDTO {
+interface whitelistUpdateTruckDTO {
     license_number?: string
     gasoline?: string
     age?: number
@@ -24,7 +24,7 @@ interface whitelistupdateTruckDTO {
 
 interface updateTruckDTO {
     truck_id: string
-    truckinfo: whitelistupdateTruckDTO
+    truckinfo: whitelistUpdateTruckDTO
 }
 
-export { createTruckDTO, updateTruckDTO, whitelistupdateTruckDTO, deleteTruckDTO} 
+export { createTruckDTO, updateTruckDTO, whitelistUpdateTruckDTO, deleteTruckDTO} 

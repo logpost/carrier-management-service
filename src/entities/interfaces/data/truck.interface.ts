@@ -1,6 +1,6 @@
 export interface TruckTypeInterface {
     wheel?: number
-    is_container?: boolean
+    options?: string
 }
 
 export interface TruckWeightInterface { 
