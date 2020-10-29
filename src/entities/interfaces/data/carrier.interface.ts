@@ -16,7 +16,7 @@ interface CarrierDocument extends Document {
     readonly juristic_id: string
     readonly verified: boolean
     readonly trucks: TruckInterface 
-	readonly driver:  DriverInterface 
+	readonly drivers:  DriverInterface 
     readonly create_at: Date
     readonly updated_at: Date
 }

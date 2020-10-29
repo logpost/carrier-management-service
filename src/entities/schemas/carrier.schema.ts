@@ -16,7 +16,7 @@ export const CarrierSchema = new mongoose.Schema(
 		tel: { type: String, default: null, trim: true },
 		juristic_id: { type: String, default: null, trim: true },
 		trucks: { type: [ TruckSchema ], default: []},
-		driver: { type: [ DriverSchema ], default: []}
+		drivers: { type: [ DriverSchema ], default: []}
 	},
 	{
 		versionKey: false,

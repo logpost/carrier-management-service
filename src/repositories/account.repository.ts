@@ -1,11 +1,10 @@
 import { model, Model } from 'mongoose'
+import config from '../config/config'
 import { CarrierInterface } from '../entities/interfaces/data/carrier.interface'
 import { CarrierSchema } from '../entities/schemas/carrier.schema'
-import { createDTO, identifierDTO ,updateProfileDTO, whitelistupdateProfileDTO } from '../entities/dtos/carrier.dto'
-import { createTruckDTO, updateTruckDTO, whitelistupdateTruckDTO } from '../entities/dtos/truck.dto'
-import config from '../config/config'
-import { TruckInterface } from 'src/entities/interfaces/data/truck.interface'
-import TruckSchema from 'src/entities/schemas/truck.schema'
+import { createTruckDTO } from '../entities/dtos/truck.dto'
+import { createDriverDTO } from 'src/entities/dtos/driver.dto'
+import { createDTO, identifierDTO, whitelistupdateProfileDTO } from '../entities/dtos/carrier.dto'
 
 class AccountRepository {
     private static instance: AccountRepository
@@ -88,7 +87,28 @@ class AccountRepository {
 
     public async deleteTruckByTruckIdAndUsername(username: string, truck_id: string): Promise<string> {
         const { _id: carrier_id } = await this._model.update({ username }, { $pull: { "trucks": {truck_id: truck_id} as any }})
-        console.log(carrier_id)
+        return carrier_id as string
+    }
+
+    // ##### DRIVER REPOSITORY
+
+    public async findDriverExistOnUsernameByLicenseNumber(username: string, driver_license: string): Promise<CarrierInterface | null> {
+        const result = await this._model.findOne({ username, "driver.driver_license": driver_license }) as CarrierInterface
+        return result
+    }
+
+    public async createDriverByUsername(username: string, driverinfo: createDriverDTO): Promise<string> {
+        const { driver_id } = await this._model.update({ username }, { $push: { "drivers" : driverinfo as any } })
+        return driver_id
+    }
+
+    public async updateDriverByDriverIdAndUsername(username: string, driver_id: string, query: any): Promise<string> {
+        const { _id: carrier_id } = await this._model.update({ username, "drivers.driver_id": driver_id }, { $set: query })
+        return carrier_id as string
+    }
+
+    public async deleteDriverByDriverIdAndUsername(username: string, driver_id: string): Promise<string> {
+        const { _id: carrier_id } = await this._model.update({ username }, { $pull: { "drivers": {driver_id: driver_id} as any }})
         return carrier_id as string
     }
 }
