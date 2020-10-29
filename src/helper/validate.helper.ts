@@ -1,5 +1,5 @@
 import config from '../config/config'
-import { whitelistUpdateFieldDTO } from '../entities/dtos/todo.dto'
+import { whitelistupdateProfileDTO } from '../entities/dtos/carrier.dto'
 import { Whitelist } from '../entities/interfaces/data/whitelist.interface'
 import { whitelist } from '../entities/whitelists/whitelist.entity'
 
@@ -15,8 +15,8 @@ const isNotValidField = (whitelist: Whitelist, fieldList: string): boolean => {
   return !Object.keys(whitelist).includes(fieldList)
 }
 
-const validUpdatedFields = (data: whitelistUpdateFieldDTO): string[] => {
-  const errorFieldsUpdate: string[] = Object.keys(data).filter((key) => isNotValidField(whitelist['todo'], key))
+const validUpdatedFields = (profile: whitelistupdateProfileDTO, whitelist_key: string): string[] => {
+  const errorFieldsUpdate: string[] = Object.keys(profile).filter((key) => isNotValidField(whitelist[whitelist_key], key))
   return errorFieldsUpdate
 }
 
