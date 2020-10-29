@@ -25,7 +25,7 @@ async function createDriver(username: string, driverinfo: createDriverDTO): Prom
 async function updateDriver(username: string, driver: updateDriverDTO): Promise<string> {
     const accountRepository = AccountRepository.getInstance()
     const { driver_id , driverinfo} = driver
-    const query = queryUpdateItemInArray(driverinfo)
+    const query = queryUpdateItemInArray(driverinfo, 'drivers')
     
     try {
         await accountRepository.updateDriverByDriverIdAndUsername(username, driver_id, query)

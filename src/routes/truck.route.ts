@@ -14,7 +14,6 @@ class TruckRoute {
             responseHandler(async () => {
               const { username } = request.user as Payload
               const truckinfo : createTruckDTO = request.body as createTruckDTO   
-              console.log(username, truckinfo)
               const data = await TruckUsecase.createTruck(username, truckinfo)
               return data
             }, reply)

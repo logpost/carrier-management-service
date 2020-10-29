@@ -25,7 +25,7 @@ async function createTruck(username: string, truckinfo: createTruckDTO): Promise
 async function updateTruck(username: string, truck: updateTruckDTO): Promise<string> {
     const accountRepository = AccountRepository.getInstance()
     const { truck_id , truckinfo} = truck
-    const query = queryUpdateItemInArray(truckinfo)
+    const query = queryUpdateItemInArray(truckinfo, 'trucks')
     
     try {
         await accountRepository.updateTruckByTruckIdAndUsername(username, truck_id, query)

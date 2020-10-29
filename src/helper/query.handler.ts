@@ -1,7 +1,7 @@
-const queryUpdateItemInArray = (data: {[key: string]: any}) => {
+const queryUpdateItemInArray = (data: {[key: string]: any}, field: string) => {
     let query: any = {}
     Object.keys(data).map((key):void => {
-        query[`trucks.$.${key}`] =  (data as any)[key]  
+        query[`${field}.$.${key}`] =  (data as any)[key]  
     })
     return query
 }

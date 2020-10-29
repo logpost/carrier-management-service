@@ -93,11 +93,12 @@ class AccountRepository {
     // ##### DRIVER REPOSITORY
 
     public async findDriverExistOnUsernameByLicenseNumber(username: string, driver_license: string): Promise<CarrierInterface | null> {
-        const result = await this._model.findOne({ username, "driver.driver_license": driver_license }) as CarrierInterface
+        const result = await this._model.findOne({ username, "drivers.driver_license": driver_license }) as CarrierInterface
         return result
     }
 
     public async createDriverByUsername(username: string, driverinfo: createDriverDTO): Promise<string> {
+        console.log(username, driverinfo)
         const { driver_id } = await this._model.update({ username }, { $push: { "drivers" : driverinfo as any } })
         return driver_id
     }

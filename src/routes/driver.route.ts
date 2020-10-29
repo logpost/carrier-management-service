@@ -14,7 +14,6 @@ class DriverRoute {
             responseHandler(async () => {
               const { username } = request.user as Payload
               const driverinfo : createDriverDTO = request.body as createDriverDTO   
-              console.log(username, driverinfo)
               const data = await DriverUsecase.createDriver(username, driverinfo)
               return data
             }, reply)
