@@ -4,7 +4,8 @@ import MongoAdapter from './adapters/mongo.adapter'
 
 class App {
   public app: FastifyInstance
-  public portApp: number = parseInt(`${config.app.port}`, 10) ?? 8080
+  public app_doamain: string = config.app.domain
+  public app_port: number = parseInt(`${config.app.port}`, 10) ?? 8080
 
   private databaseInfo = {
     username: config.db.mongo.username!,
@@ -41,8 +42,8 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.portApp, () => {
-      console.log(`App listening on the http://localhost:${this.portApp}`)
+    this.app.listen(this.app_port, () => {
+      console.log(`Carrier Management Service 🚚 \nlistening on the http://${this.app_doamain}:${this.app_port} 🌟`)
     })
   }
 }
