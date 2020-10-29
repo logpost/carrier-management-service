@@ -11,7 +11,7 @@ export const CarrierSchema = new mongoose.Schema(
 		account_description: { type: String, default: null },
 		address: { type: String, default: null },
 		verified: { type: Boolean, default: false },
-		account_type: { type: String, required: true, default: 'personal' , trim: true, lowercase: true},
+		account_type: { type: String, required: true, enum: ['personal', 'business'], default: 'personal', trim: true, lowercase: true},
 		email: { type: String, default: 'not_confirm', trim: true },
 		tel: { type: String, default: null, trim: true },
 		juristic_id: { type: String, default: null, trim: true },

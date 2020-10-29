@@ -24,7 +24,7 @@ const TruckWeightSchema = new mongoose.Schema(
 
 const TruckSchema = new mongoose.Schema(
     {
-        truck_id: { type: mongoose.Schema.Types.ObjectId, unique: true, auto: true },
+        truck_id: { type: mongoose.Schema.Types.ObjectId, index: true, required: true, auto: true},
         license_number: { type: String, default: null, trim: true },
         gasoline: { type: String, default: null, trim: true },
         age: { type: Number, max: 10, default: 0 } ,
