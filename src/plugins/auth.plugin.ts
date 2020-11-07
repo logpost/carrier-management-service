@@ -11,7 +11,7 @@ const authPlugin = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: 
         secret: config.jwt.private_route.secret.jwt_secret
     })
 
-    fastify.decorate("authenticate", async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.decorate("verifyAuth", async (request: FastifyRequest, reply: FastifyReply) => {
         try {
             await request.jwtVerify()
         } catch (err) {

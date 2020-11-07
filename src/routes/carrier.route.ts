@@ -17,7 +17,7 @@ class CarrierRoutes {
       await reply
     })
 
-    fastify.get(`/admin/profile/:username`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.get(`/admin/profile/:username`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
       responseHandler(async () => {
         const param: identifierDTO = request.params as identifierDTO   
         const data = await CarrierUsecase.adminFindCarrierByIdentifier(param)
@@ -47,7 +47,7 @@ class CarrierRoutes {
     })
     
     // This route have vulnerability at client, we should use this route service to service for policy.
-    fastify.put(`/confirmed_email`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.put(`/confirmed_email`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
       responseHandler(async () => {
         const req: confirmedEmailDTO = request.body as confirmedEmailDTO
         let { email, identifier } = req 
@@ -66,7 +66,7 @@ class CarrierRoutes {
       await reply
     })
 
-    fastify.delete(`/force_delete`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.delete(`/force_delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
       responseHandler(async () => {
         const req: deleteDTO = request.body as deleteDTO
         const { username } = request.user as Payload
@@ -83,7 +83,7 @@ class CarrierRoutes {
       await reply
     })
 
-    fastify.put(`/delete`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.put(`/delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
       responseHandler(async () => {
         const req: deleteDTO = request.body as deleteDTO
         const { username } = request.user as Payload
@@ -99,7 +99,7 @@ class CarrierRoutes {
       await reply
     })
 
-    fastify.put(`/profile/update`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+    fastify.put(`/profile/update`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
       responseHandler(async () => {
         const { username } = request.user as Payload
         const identifier: identifierDTO  = { username }

@@ -10,7 +10,7 @@ class DriverRoute {
 
     async routes(fastify: FastifyInstance, opts: FastifyPluginOptions, done: any) {
 
-        fastify.post(`/create`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+        fastify.post(`/create`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
             responseHandler(async () => {
                 const { username } = request.user as Payload
                 const driverinfo : createDriverDTO = request.body as createDriverDTO   
@@ -20,7 +20,7 @@ class DriverRoute {
             await reply
         })
           
-        fastify.put(`/update`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+        fastify.put(`/update`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
             responseHandler(async () => {
                 const { username } = request.user as Payload
                 const driver: updateDriverDTO = request.body as updateDriverDTO   
@@ -30,7 +30,7 @@ class DriverRoute {
             await reply
         })
 
-        fastify.delete(`/delete`, { preValidation: [(fastify as any).authenticate] }, async (request, reply) => {
+        fastify.delete(`/delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
             responseHandler(async () => {
                 const { username } = request.user as Payload
                 const { driver_id }  = request.body as deleteDriverDTO

@@ -1,9 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
 import * as mongoose from 'mongoose'
 import TruckSchema from './truck.schema'
 import DriverSchema from './driver.schema'
 
 export const CarrierSchema = new mongoose.Schema(
 	{
+		carrier_id: { type: String, default: uuidv4, index: true },
 		username: { type: String, required: true, unique: true },
 		password: { type: String, required: true },
 		name: { type: String, required: true, unique: true },
