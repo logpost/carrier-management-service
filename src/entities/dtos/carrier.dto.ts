@@ -6,6 +6,7 @@ interface createDTO {
   display_name?: string
   tel?: string
   address?: string
+  role?: string
   account_type: string
   account_description?: string
   juristic_id?: string

@@ -44,17 +44,17 @@ class AccountRepository {
 
     public async createCarrierAccount(carrier_account: createDTO): Promise<string> {
         const mongooseModel = new this._model(carrier_account)
-        const { _id: carrier_id } = await mongooseModel.save()
+        const { carrier_id } = await mongooseModel.save()
         return carrier_id as string
     }
 
     public async updateEmailByIdentifier(identifier: identifierDTO, email: string): Promise<string> {
-        const { _id: carrier_id } = await this._model.updateOne(identifier, { $set: { email }})
+        const { carrier_id } = await this._model.updateOne(identifier, { $set: { email }})
         return carrier_id as string
     }
 
     public async updateProfileCarrierAccountByIdentifier(identifier: identifierDTO, profile: whitelistupdateProfileDTO): Promise<string> {
-        const { _id: carrier_id } = await this._model.updateOne(identifier, { $set: profile })
+        const { carrier_id } = await this._model.updateOne(identifier, { $set: profile })
         return carrier_id as string
     }
 
@@ -81,12 +81,12 @@ class AccountRepository {
     }
 
     public async updateTruckByTruckIdAndUsername(username: string, truck_id: string, query: any): Promise<string> {
-        const { _id: carrier_id } = await this._model.update({ username, "trucks.truck_id": truck_id }, { $set: query })
+        const { carrier_id } = await this._model.update({ username, "trucks.truck_id": truck_id }, { $set: query })
         return carrier_id as string
     }
 
     public async deleteTruckByTruckIdAndUsername(username: string, truck_id: string): Promise<string> {
-        const { _id: carrier_id } = await this._model.update({ username }, { $pull: { "trucks": {truck_id: truck_id} as any }})
+        const { carrier_id } = await this._model.update({ username }, { $pull: { "trucks": {truck_id: truck_id} as any }})
         return carrier_id as string
     }
 
@@ -103,12 +103,12 @@ class AccountRepository {
     }
 
     public async updateDriverByDriverIdAndUsername(username: string, driver_id: string, query: any): Promise<string> {
-        const { _id: carrier_id } = await this._model.update({ username, "drivers.driver_id": driver_id }, { $set: query })
+        const { carrier_id } = await this._model.update({ username, "drivers.driver_id": driver_id }, { $set: query })
         return carrier_id as string
     }
 
     public async deleteDriverByDriverIdAndUsername(username: string, driver_id: string): Promise<string> {
-        const { _id: carrier_id } = await this._model.update({ username }, { $pull: { "drivers": {driver_id: driver_id} as any }})
+        const { carrier_id } = await this._model.update({ username }, { $pull: { "drivers": {driver_id: driver_id} as any }})
         return carrier_id as string
     }
 }

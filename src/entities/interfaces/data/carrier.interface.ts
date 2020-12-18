@@ -11,6 +11,7 @@ interface CarrierDocument extends Document {
     readonly display_name: string
     readonly tel: string
     readonly address: string
+    readonly role: string 
     readonly account_type: string
     readonly account_description: string
     readonly juristic_id: string
