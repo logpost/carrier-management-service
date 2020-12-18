@@ -4,17 +4,9 @@ import MongoAdapter from './adapters/mongo.adapter'
 
 class App {
 	public app: FastifyInstance
+	public app_kind: string = config.app.kind
 	public app_doamain: string = config.app.domain
 	public app_port: number = parseInt(`${config.app.port}`, 10) ?? 8080
-
-	private databaseInfo = {
-		username: config.db.mongo.username!,
-		password: config.db.mongo.password!,
-		host: config.db.mongo.host!,
-		port: parseInt(`${config.db.mongo.port}`, 10) ?? 27017,
-		dbName: config.db.mongo.name!,
-		authName: config.db.mongo.auth!,
-	}
 
 	constructor(appInit: { plugins: any; routes: any }) {
 		this.app = fastify({ logger: true })
@@ -24,8 +16,7 @@ class App {
 	}
 
 	private async connectDatabase() {
-		let { username, password, host, port, dbName, authName } = this.databaseInfo
-		await new MongoAdapter(username, password, host, port, dbName, authName)
+		await new MongoAdapter()
 	}
 
 	private pluginsRegister(plugins: { forEach: (arg0: (plugins: any) => void) => void }) {
@@ -43,9 +34,9 @@ class App {
 
 	public listen() {
 		this.app.listen(process.env.PORT || this.app_port, () => {
-			console.log(
-				`Carrier Management Service 🚚 \nlistening on the http://${this.app_doamain}:${this.app_port} 🌟`,
-			)
+			console.log(`Carrier Management Service 🚚 `)
+			console.log(`Listening on the http://${this.app_doamain}:${this.app_port} 🌟`)
+			console.log(`Working on ${this.app_kind.toUpperCase()} ENVIRONMENT 👻`)
 		})
 	}
 }

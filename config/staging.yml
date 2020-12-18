@@ -20,11 +20,13 @@ jwt:
             audience: logpost
 
 db:
+    required:
+        isAuth: true
     mongo:
-        username: root
-        password: root
-        host: localhost
-        port: 27017
-        name: logpost
-        auth: admin
+        protocal: mongodb+srv
+        username: logpost
+        password: logpost
+        host: cluster0.j9jsp.mongodb.net
+        database: logpost-stag
+        options: ?retryWrites=true&w=majority
         collection: carrier_account

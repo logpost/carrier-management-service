@@ -1,30 +1,32 @@
 app:
-  domain: localhost
-  kind: development
-  port: 8081
+    domain: localhost
+    kind: development
+    port: 8081
 
 jwt:
-  confirm_email:
-    secret:
-      jwt_secret: logpostemailconfirm
-    options:
-      expires_in: 14hr
-      issuer: logpost
-      audience: mailer
-  private_route:
-    secret:
-      jwt_secret: logpostprivateroute
-    options:
-      expires_in: 30d
-      issuer: logpost
-      audience: logpost
+    confirm_email:
+        secret:
+            jwt_secret: logpostemailconfirm
+        options:
+            expires_in: 14hr
+            issuer: logpost
+            audience: mailer
+    private_route:
+        secret:
+            jwt_secret: logpostprivateroute
+        options:
+            expires_in: 30d
+            issuer: logpost
+            audience: logpost
 
 db:
-  mongo:
-    username: root
-    password: root
-    host: localhost
-    port: 27017
-    name: logpost
-    auth: admin
-    collection: carrier_account
+    required:
+        isAuth: false
+    mongo:
+        protocal: mongodb
+        username: null
+        password: null
+        host: localhost:27017
+        database: logpost
+        options: ?authSource=admin
+        collection: carrier_account
