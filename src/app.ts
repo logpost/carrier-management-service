@@ -6,10 +6,16 @@ class App {
 	public app: FastifyInstance
 	public app_kind: string = config.app.kind
 	public app_doamain: string = config.app.domain
-	public app_port: number = parseInt(`${config.app.port}`, 10) ?? 8080
+	public app_port: number | string = process.env.PORT || (parseInt(`${config.app.port}`, 10) ?? 8080)
+	public app_address: string
+	
+	// Google Cloud Run will set this environment variable for you, so
+	// you can also use it to detect if you are running in Cloud Run
+	public IS_GOOGLE_CLOUD_RUN = process.env.K_SERVICE !== undefined
 
 	constructor(appInit: { plugins: any; routes: any }) {
-		this.app = fastify({ logger: true })
+		this.app = fastify({ logger: true, trustProxy: true })
+		this.app_address = this.IS_GOOGLE_CLOUD_RUN ? '0.0.0.0' : '127.0.0.1'
 		this.connectDatabase()
 		this.pluginsRegister(appInit.plugins)
 		this.routes(appInit.routes)
@@ -33,7 +39,7 @@ class App {
 	}
 
 	public listen() {
-		this.app.listen(process.env.PORT || this.app_port, () => {
+		this.app.listen(this.app_port, this.app_address, () => {
 			console.log(`Carrier Management Service 🚚 `)
 			console.log(`Listening on the http://${this.app_doamain}:${this.app_port} 🌟`)
 			console.log(`Working on ${this.app_kind.toUpperCase()} ENVIRONMENT 👻`)
