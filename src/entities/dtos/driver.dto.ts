@@ -1,27 +1,27 @@
-
 interface createDriverDTO {
-    name: string
-    age: number
-    driver_license: string
-    driver_license_type: string
-    identification_number: string 
+	name: string
+	age: number
+	driver_license: string
+	driver_license_type: string
+	identification_number: string
 }
 
 interface deleteDriverDTO {
-    driver_id: string
+	driver_id: string
 }
 
 interface whitelistUpdateDriverDTO {
-    name?: string
-    age?: number
-    driver_license?: string
-    driver_license_type?: string
-    identification_number?: string 
+	name?: string
+	age?: number
+	driver_license?: string
+	driver_license_type?: string
+	identification_number?: string
+	status?: number
 }
 
 interface updateDriverDTO {
-    driver_id: string
-    driverinfo: whitelistUpdateDriverDTO
+	driver_id: string
+	driverinfo: whitelistUpdateDriverDTO
 }
 
-export { createDriverDTO, updateDriverDTO, whitelistUpdateDriverDTO, deleteDriverDTO} 
+export { createDriverDTO, updateDriverDTO, whitelistUpdateDriverDTO, deleteDriverDTO }
