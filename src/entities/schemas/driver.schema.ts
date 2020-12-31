@@ -8,7 +8,7 @@ const DriverSchema = new mongoose.Schema(
 		driver_license: { type: String, required: true, trim: true },
 		driver_license_type: { type: String, required: true, trim: true },
 		identification_number: { type: String, required: true, trim: true },
-		status: { type: Number, default: 100 },
+		status: { type: Number, default: 100, enum: [100, 200, 300], required: true },
 	},
 	{
 		_id: false,
