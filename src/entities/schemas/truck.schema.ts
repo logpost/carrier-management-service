@@ -31,7 +31,7 @@ const TruckSchema = new mongoose.Schema(
 		is_insure: { type: Boolean, default: false },
 		type: { type: TruckTypeSchema },
 		weight: { type: TruckWeightSchema },
-		status: { type: Number, default: 100 },
+		status: { type: Number, default: 100, enum: [100, 200, 300], required: true },
 	},
 	{
 		_id: false,
