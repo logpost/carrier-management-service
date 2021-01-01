@@ -24,4 +24,8 @@ interface updateDriverDTO {
 	driverinfo: whitelistUpdateDriverDTO
 }
 
-export { createDriverDTO, updateDriverDTO, whitelistUpdateDriverDTO, deleteDriverDTO }
+interface QueryReqDriverDTO {
+	status?: string
+}
+
+export { createDriverDTO, updateDriverDTO, whitelistUpdateDriverDTO, deleteDriverDTO, QueryReqDriverDTO }
