@@ -28,4 +28,8 @@ interface updateTruckDTO {
 	truckinfo: whitelistUpdateTruckDTO
 }
 
-export { createTruckDTO, updateTruckDTO, whitelistUpdateTruckDTO, deleteTruckDTO }
+interface QueryReqTruckDTO {
+	status?: string
+}
+
+export { createTruckDTO, updateTruckDTO, whitelistUpdateTruckDTO, deleteTruckDTO, QueryReqTruckDTO }

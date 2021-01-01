@@ -1,4 +1,5 @@
 app:
+    base_url: http://localhost:8081
     domain: localhost
     kind: production
     port: 8081
@@ -8,14 +9,14 @@ jwt:
         secret:
             jwt_secret: logpostemailconfirm
         options:
-            expires_in: 14hr
+            expires_in: 10m
             issuer: logpost
             audience: mailer
     private_route:
         secret:
             jwt_secret: logpostprivateroute
         options:
-            expires_in: 30d
+            expires_in: 10m
             issuer: logpost
             audience: logpost
 
