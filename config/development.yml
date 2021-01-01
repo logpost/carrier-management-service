@@ -15,7 +15,7 @@ jwt:
         secret:
             jwt_secret: logpostprivateroute
         options:
-            expires_in: 30d
+            expires_in: 10m
             issuer: logpost
             audience: logpost
 
