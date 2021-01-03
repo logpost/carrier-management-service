@@ -18,7 +18,7 @@ const authPlugin = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: 
 				const decodedToken: any = fastify.jwt.decode(token)
 				const { isConfirmEmail, role } = decodedToken
 				if (role === 'carrier' || role === 'srv') {
-					if (!isConfirmEmail) throw { statusCode: 403, message: "your email haven't confirmed." }
+					if (!isConfirmEmail) throw { statusCode: 401, message: "your email haven't confirmed." }
 				} else {
 					throw { statusCode: 401, message: "your role can't use the api." }
 				}
