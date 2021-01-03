@@ -1,11 +1,11 @@
-import { TruckTypeInterface, TruckWeightInterface } from '../interfaces/data/truck.interface'
+import { TruckPropertyInterface, TruckWeightInterface } from '../interfaces/data/truck.interface'
 
 interface createTruckDTO {
 	license_number: string
 	gasoline: string
 	age: number
 	is_insure: boolean
-	type: TruckTypeInterface
+	property: TruckPropertyInterface
 	weight: TruckWeightInterface
 }
 
@@ -19,7 +19,7 @@ interface whitelistUpdateTruckDTO {
 	age?: number
 	is_insure?: boolean
 	status?: number
-	type?: TruckTypeInterface
+	property?: TruckPropertyInterface
 	weight?: TruckWeightInterface
 }
 

@@ -1,6 +1,7 @@
-export interface TruckTypeInterface {
-	wheel?: number
-	options?: string
+export interface TruckPropertyInterface {
+	type: string
+	option: string
+	chassis?: number
 }
 
 export interface TruckWeightInterface {
@@ -15,7 +16,7 @@ export interface TruckInterface {
 	age: number
 	is_insure: boolean
 	status: number
-	type: TruckTypeInterface
+	property: TruckPropertyInterface
 	weight: TruckWeightInterface
 	created_at: Date
 	updated_at: Date

@@ -1,9 +1,10 @@
 import * as mongoose from 'mongoose'
 
-const TruckTypeSchema = new mongoose.Schema(
+const TruckPropertySchema = new mongoose.Schema(
 	{
-		wheel: { type: Number, require: true, default: 4 },
-		options: { type: String, default: '' },
+		type: { type: String, required: true },
+		option: { type: String, required: true },
+		chassis: { type: Number, default: 0 },
 	},
 	{
 		_id: false,
@@ -29,7 +30,7 @@ const TruckSchema = new mongoose.Schema(
 		gasoline: { type: String, default: null, trim: true },
 		age: { type: Number, max: 10, default: 0 },
 		is_insure: { type: Boolean, default: false },
-		type: { type: TruckTypeSchema },
+		property: { type: TruckPropertySchema },
 		weight: { type: TruckWeightSchema },
 		status: { type: Number, default: 100, enum: [100, 200, 300], required: true },
 	},
