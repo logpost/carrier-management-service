@@ -1,4 +1,5 @@
 import { TruckPropertyInterface, TruckWeightInterface } from '../interfaces/data/truck.interface'
+import { identifierDTO as CarrierIdentifier } from './carrier.dto'
 
 interface createTruckDTO {
 	license_number: string
@@ -12,7 +13,6 @@ interface createTruckDTO {
 interface deleteTruckDTO {
 	truck_id: string
 }
-
 interface whitelistUpdateTruckDTO {
 	license_number?: string
 	gasoline?: string
@@ -23,13 +23,38 @@ interface whitelistUpdateTruckDTO {
 	weight?: TruckWeightInterface
 }
 
-interface updateTruckDTO {
+interface updateTruckByCarrierDTO {
 	truck_id: string
 	truckinfo: whitelistUpdateTruckDTO
 }
-
-interface QueryReqTruckDTO {
-	status?: string
+interface updateTruckBySrvDTO {
+	identifier: CarrierIdentifier
+	truck_id: string
+	truckinfo: whitelistUpdateTruckDTO
+}
+interface queryTruckDTO {
+	truck_id?: string
+	license_number?: string
+	gasoline?: string | string
+	age?: number
+	is_insure?: boolean | string
+	property?: TruckPropertyInterface
+	weight?: TruckWeightInterface
+	status?: number | string
+}
+interface filterTruckDTO {
+	identifier: CarrierIdentifier
+	query: queryTruckDTO
 }
 
-export { createTruckDTO, updateTruckDTO, whitelistUpdateTruckDTO, deleteTruckDTO, QueryReqTruckDTO }
+type updateTruckDTO = updateTruckByCarrierDTO | updateTruckBySrvDTO
+
+export {
+	createTruckDTO,
+	updateTruckDTO,
+	whitelistUpdateTruckDTO,
+	deleteTruckDTO,
+	filterTruckDTO,
+	queryTruckDTO,
+	updateTruckBySrvDTO,
+}
