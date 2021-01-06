@@ -75,7 +75,7 @@ class CarrierRoutes {
 
 		// This route have vulnerability at client, we should use this route service to service for policy.
 		fastify.put(
-			`/srv/confirmed_email`,
+			`/srv/confirmed/email`,
 			{ preValidation: [(fastify as any).verifyAuth] },
 			async (request, reply) => {
 				responseHandler(async () => {
@@ -104,7 +104,7 @@ class CarrierRoutes {
 			await reply
 		})
 
-		fastify.delete(`/force_delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+		fastify.delete(`/force/delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
 			responseHandler(async () => {
 				const req: deleteDTO = request.body as deleteDTO
 				const { username } = request.user as Payload
