@@ -1,7 +1,9 @@
 import AccountRepository from '../repositories/account.repository'
-import { createTruckDTO, updateTruckDTO } from '../entities/dtos/truck.dto'
+import { identifierDTO as CarrierIdentifier } from '../entities/dtos/carrier.dto'
+import { createTruckDTO, updateTruckDTO, queryTruckDTO } from '../entities/dtos/truck.dto'
 import { queryUpdateItemInArray } from '../helper/query.handler'
 import { TruckInterface } from '../entities/interfaces/data/truck.interface'
+import TruckFilterFactory from '../filters/truck.filter.factory'
 
 async function createTruck(username: string, truckinfo: createTruckDTO): Promise<string> {
 	const accountRepository = AccountRepository.getInstance()
@@ -19,14 +21,14 @@ async function createTruck(username: string, truckinfo: createTruckDTO): Promise
 	throw new Error(`400 : Truck is existing, create truck didn't successfully`)
 }
 
-async function updateTruck(username: string, truck: updateTruckDTO): Promise<string> {
+async function updateTruck(identifier: CarrierIdentifier, truck: updateTruckDTO): Promise<string> {
 	const accountRepository = AccountRepository.getInstance()
 	const { truck_id, truckinfo } = truck
 	const query = queryUpdateItemInArray(truckinfo, 'trucks')
 
 	try {
-		await accountRepository.updateTruckByTruckIdAndUsername(username, truck_id, query)
-		return `200 : Update truck info is successfully`
+		await accountRepository.updateTruckByTruckIdAndUsername(identifier, truck_id, query)
+		return `204 : Update truck info is successfully`
 	} catch (err) {
 		console.log(err)
 		throw new Error(`400 : Update truck info is not successfully`)
@@ -37,20 +39,17 @@ async function deleteTruck(username: string, truck_id: string): Promise<string> 
 	const accountRepository = AccountRepository.getInstance()
 	try {
 		await accountRepository.deleteTruckByTruckIdAndUsername(username, truck_id)
-		return `200 : Delete truck is successfully`
+		return `204 : Delete truck is successfully`
 	} catch (err) {
 		console.log(err)
 		throw new Error(`400 : Delete truck is not successfully`)
 	}
 }
 
-async function findTrucks(username: string, status: string | undefined): Promise<TruckInterface[]> {
+async function findAllTrucks(username: string): Promise<TruckInterface[]> {
 	const accountRepository = AccountRepository.getInstance()
 	try {
 		const trucks = await accountRepository.findTrucksByIdentifier({ username })
-		if (status) {
-			return trucks.filter((truck) => truck.status === parseInt(status, 10))
-		}
 		return trucks
 	} catch (error) {
 		console.log(error)
@@ -58,9 +57,20 @@ async function findTrucks(username: string, status: string | undefined): Promise
 	}
 }
 
+async function queryTruck(identifier: CarrierIdentifier, query: queryTruckDTO): Promise<TruckInterface[]> {
+	const accountRepository = AccountRepository.getInstance()
+	const trucks = await accountRepository.findTrucksByIdentifier(identifier)
+	if (trucks) {
+		const data = await TruckFilterFactory.filterByQuery(trucks, query)
+		return data
+	}
+	throw new Error(`404 : Identifier is not exist in database`)
+}
+
 export default {
 	createTruck,
 	updateTruck,
 	deleteTruck,
-	findTrucks,
+	findAllTrucks,
+	queryTruck,
 }
