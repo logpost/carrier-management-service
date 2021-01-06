@@ -5,6 +5,7 @@ const DriverSchema = new mongoose.Schema(
 		driver_id: { type: mongoose.Schema.Types.ObjectId, index: true, required: true, auto: true },
 		name: { type: String, required: true },
 		age: { type: Number, max: 100, min: 18, required: true },
+		tel: { type: String, required: true },
 		driver_license: { type: String, required: true, trim: true },
 		driver_license_type: { type: String, required: true, trim: true },
 		identification_number: { type: String, required: true, trim: true },

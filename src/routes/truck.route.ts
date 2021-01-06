@@ -1,6 +1,13 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { Payload } from '../entities/dtos/token.dto'
-import { createTruckDTO, updateTruckDTO, deleteTruckDTO, QueryReqTruckDTO } from '../entities/dtos/truck.dto'
+import {
+	createTruckDTO,
+	updateTruckDTO,
+	deleteTruckDTO,
+	// queryTruckDTO,
+	filterTruckDTO,
+	updateTruckBySrvDTO,
+} from '../entities/dtos/truck.dto'
 import responseHandler from '../helper/response.handler'
 import TruckUsecase from '../usecase/truck.usecase'
 // import * as Validator from '../helper/validate.helper'
@@ -9,6 +16,25 @@ class TruckRoute {
 	public prefix_route = '/truck'
 
 	async routes(fastify: FastifyInstance, opts: FastifyPluginOptions, done: any) {
+		fastify.put(`/srv/update`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+			responseHandler(async () => {
+				const info: updateTruckDTO = request.body as updateTruckDTO
+				const { identifier, ...truck } = info as updateTruckBySrvDTO
+				const data = await TruckUsecase.updateTruck(identifier, truck)
+				return data
+			}, reply)
+			await reply
+		})
+
+		fastify.get(`/owned`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+			responseHandler(async () => {
+				const { username } = request.user as Payload
+				const data = await TruckUsecase.findAllTrucks(username)
+				return data
+			}, reply)
+			await reply
+		})
+
 		fastify.post(`/create`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
 			responseHandler(async () => {
 				const { username } = request.user as Payload
@@ -23,7 +49,7 @@ class TruckRoute {
 			responseHandler(async () => {
 				const { username } = request.user as Payload
 				const truck: updateTruckDTO = request.body as updateTruckDTO
-				const data = await TruckUsecase.updateTruck(username, truck)
+				const data = await TruckUsecase.updateTruck({ username }, truck)
 				return data
 			}, reply)
 			await reply
@@ -39,13 +65,12 @@ class TruckRoute {
 			await reply
 		})
 
-		// /all or /all?status=100
-		fastify.get(`/all`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+		fastify.post(`/filter`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
 			responseHandler(async () => {
 				const { username } = request.user as Payload
-				const { status } = request.query as QueryReqTruckDTO
-				const data = await TruckUsecase.findTrucks(username, status)
-				return data
+				const { query } = request.body as filterTruckDTO
+				const trucks = await TruckUsecase.queryTruck({ username }, query)
+				return trucks
 			}, reply)
 			await reply
 		})
