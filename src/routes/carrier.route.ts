@@ -8,6 +8,7 @@ import {
 	deleteDTO,
 	identifierDTO,
 	whitelistupdateProfileDTO,
+	updateJobHistoryDTO,
 } from '../entities/dtos/carrier.dto'
 import * as Validator from '../helper/validate.helper'
 
@@ -23,28 +24,46 @@ class CarrierRoutes {
 		})
 
 		fastify.get(
-			`/admin/profile/:username`,
+			`/srv/profile/:username`,
 			{ preValidation: [(fastify as any).verifyAuth] },
 			async (request, reply) => {
 				responseHandler(async () => {
 					const param: identifierDTO = request.params as identifierDTO
-					const data = await CarrierUsecase.adminFindCarrierByIdentifier(param)
+					console.log(param)
+					const data = await CarrierUsecase.srvFindCarrierByIdentifier(param)
 					return data
 				}, reply)
 				await reply
 			},
 		)
 
-		fastify.get(`/profile/:username`, async (request, reply) => {
-			responseHandler(async () => {
-				const param: identifierDTO = request.params as identifierDTO
-				const data = await CarrierUsecase.findProfileCarrierAccountByUsername(param)
-				return data
-			}, reply)
-			await reply
-		})
+		fastify.put(
+			`/srv/job/history/add`,
+			{ preValidation: [(fastify as any).verifyAuth] },
+			async (request, reply) => {
+				responseHandler(async () => {
+					const { identifier, job_id } = request.body as updateJobHistoryDTO
+					await CarrierUsecase.updateJobHistory(identifier, job_id)
+					return `200 : Update job history success`
+				}, reply)
+				await reply
+			},
+		)
 
-		fastify.post(`/create`, async (request, reply) => {
+		fastify.delete(
+			`/srv/job/history/delete`,
+			{ preValidation: [(fastify as any).verifyAuth] },
+			async (request, reply) => {
+				responseHandler(async () => {
+					const { identifier, job_id } = request.body as updateJobHistoryDTO
+					await CarrierUsecase.deleteJobHistory(identifier, job_id)
+					return `200 : Delete job history success`
+				}, reply)
+				await reply
+			},
+		)
+
+		fastify.post(`/srv/create`, async (request, reply) => {
 			responseHandler(async () => {
 				const req: createDTO = request.body as createDTO
 				let { email, ...carrier_account } = req
@@ -55,19 +74,32 @@ class CarrierRoutes {
 		})
 
 		// This route have vulnerability at client, we should use this route service to service for policy.
-		fastify.put(`/confirmed_email`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+		fastify.put(
+			`/srv/confirmed_email`,
+			{ preValidation: [(fastify as any).verifyAuth] },
+			async (request, reply) => {
+				responseHandler(async () => {
+					const req: confirmedEmailDTO = request.body as confirmedEmailDTO
+					let { email, identifier } = req
+
+					if (!email) throw new Error(`400 : Invalid input, Please input field email`)
+
+					if ('username' in identifier || 'carrier_id' in identifier) {
+						const data = await CarrierUsecase.confirmedWithEmail(req)
+						return data
+					} else {
+						throw new Error(`400 : Invalid input, Please input field username or account id`)
+					}
+				}, reply)
+				await reply
+			},
+		)
+
+		fastify.get(`/profile/:username`, async (request, reply) => {
 			responseHandler(async () => {
-				const req: confirmedEmailDTO = request.body as confirmedEmailDTO
-				let { email, identifier } = req
-
-				if (!email) throw new Error(`400 : Invalid input, Please input field email`)
-
-				if ('username' in identifier || 'carrier_id' in identifier) {
-					const data = await CarrierUsecase.confirmedWithEmail(req)
-					return data
-				} else {
-					throw new Error(`400 : Invalid input, Please input field username or account id`)
-				}
+				const param: identifierDTO = request.params as identifierDTO
+				const data = await CarrierUsecase.findProfileCarrierAccountByUsername(param)
+				return data
 			}, reply)
 			await reply
 		})
