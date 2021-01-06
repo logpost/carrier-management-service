@@ -3,6 +3,7 @@ import config from '../config/config'
 import { CarrierInterface } from '../entities/interfaces/data/carrier.interface'
 import { TruckInterface } from '../entities/interfaces/data/truck.interface'
 import { DriverInterface } from '../entities/interfaces/data/driver.interface'
+import { JobInterface } from '../entities/interfaces/data/job.interface'
 import { CarrierSchema } from '../entities/schemas/carrier.schema'
 import { createTruckDTO } from '../entities/dtos/truck.dto'
 import { createDriverDTO } from 'src/entities/dtos/driver.dto'
@@ -27,10 +28,15 @@ class AccountRepository {
 
 	// ##### SERVICE REPOSITORY
 
-	public async adminFindCarrierByIdentifier(identifier: identifierDTO): Promise<CarrierInterface | null> {
+	public async srvFindCarrierByIdentifier(identifier: identifierDTO): Promise<CarrierInterface | null> {
 		const result: CarrierInterface | null = await this._model.findOne(identifier)
 		return result
 	}
+
+	// public async srvFindDriverByIdentifier(identifier: identifierDTO): Promise<CarrierInterface | null> {
+	// 	const result: CarrierInterface | null = await this._model.findOne(identifier)
+	// 	return result
+	// }
 
 	// ##### CARRIER REPOSITORY
 
@@ -78,6 +84,16 @@ class AccountRepository {
 		return result.nModified as number
 	}
 
+	public async updateJobHistory(identifier: identifierDTO, job: JobInterface): Promise<number> {
+		const result = await this._model.updateOne(identifier, { $push: { job_history: job as JobInterface } })
+		return result.n
+	}
+
+	public async deleteJobHistory(identifier: identifierDTO, job_id: string): Promise<number> {
+		const result = await this._model.update(identifier, { $pull: { job_history: { job_id: job_id } as any } })
+		return result.n
+	}
+
 	// ##### TRUCK REPOSITORY
 
 	public async findTruckExistOnUsernameByLicenseNumber(
@@ -96,8 +112,12 @@ class AccountRepository {
 		return truck_id
 	}
 
-	public async updateTruckByTruckIdAndUsername(username: string, truck_id: string, query: any): Promise<string> {
-		const { carrier_id } = await this._model.update({ username, 'trucks.truck_id': truck_id }, { $set: query })
+	public async updateTruckByTruckIdAndUsername(
+		identifier: identifierDTO,
+		truck_id: string,
+		query: any,
+	): Promise<string> {
+		const { carrier_id } = await this._model.update({ ...identifier, 'trucks.truck_id': truck_id }, { $set: query })
 		return carrier_id as string
 	}
 
@@ -132,8 +152,15 @@ class AccountRepository {
 		return driver_id
 	}
 
-	public async updateDriverByDriverIdAndUsername(username: string, driver_id: string, query: any): Promise<string> {
-		const { carrier_id } = await this._model.update({ username, 'drivers.driver_id': driver_id }, { $set: query })
+	public async updateDriverByDriverIdAndUsername(
+		identifier: identifierDTO,
+		driver_id: string,
+		query: any,
+	): Promise<string> {
+		const { carrier_id } = await this._model.update(
+			{ ...identifier, 'drivers.driver_id': driver_id },
+			{ $set: query },
+		)
 		return carrier_id as string
 	}
 
