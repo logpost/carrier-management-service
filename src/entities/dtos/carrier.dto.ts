@@ -44,17 +44,5 @@ interface whitelistupdateProfileDTO {
 	account_description?: string
 	juristic_id?: string
 }
-interface updateJobHistoryDTO {
-	identifier: identifierDTO
-	job_id: string
-}
 
-export {
-	createDTO,
-	updateProfileDTO,
-	whitelistupdateProfileDTO,
-	deleteDTO,
-	confirmedEmailDTO,
-	identifierDTO,
-	updateJobHistoryDTO,
-}
+export { createDTO, updateProfileDTO, whitelistupdateProfileDTO, deleteDTO, confirmedEmailDTO, identifierDTO }

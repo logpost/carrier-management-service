@@ -84,7 +84,9 @@ class AccountRepository {
 		return result.nModified as number
 	}
 
-	public async updateJobHistory(identifier: identifierDTO, job: JobInterface): Promise<number> {
+	// ##### JOB HISTORY REPOSITORY
+
+	public async addJobHistory(identifier: identifierDTO, job: JobInterface): Promise<number> {
 		const result = await this._model.updateOne(identifier, { $push: { job_history: job as JobInterface } })
 		return result.n
 	}
@@ -92,6 +94,11 @@ class AccountRepository {
 	public async deleteJobHistory(identifier: identifierDTO, job_id: string): Promise<number> {
 		const result = await this._model.update(identifier, { $pull: { job_history: { job_id: job_id } as any } })
 		return result.n
+	}
+
+	public async getJobHistory(identifier: identifierDTO): Promise<JobInterface[]> {
+		const { job_history } = (await this._model.findOne(identifier)) as CarrierInterface
+		return job_history
 	}
 
 	// ##### TRUCK REPOSITORY

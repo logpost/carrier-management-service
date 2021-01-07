@@ -132,27 +132,6 @@ async function deActivateCarrierAccount(req: deleteDTO): Promise<string> {
 	throw new Error(`404 : Invalid input, Your identifier is not exist`)
 }
 
-async function updateJobHistory(identifier: identifierDTO, job_id: string): Promise<string> {
-	const accountRepository = AccountRepository.getInstance()
-	try {
-		await accountRepository.updateJobHistory(identifier, { job_id })
-		return `201 : Update job history is successfully`
-	} catch (err) {
-		throw new Error(`400 : Update job history is not successfully`)
-	}
-}
-
-async function deleteJobHistory(identifier: identifierDTO, job_id: string): Promise<string> {
-	const accountRepository = AccountRepository.getInstance()
-	try {
-		await accountRepository.deleteJobHistory(identifier, job_id)
-		return `204 : Delete job history history is successfully`
-	} catch (err) {
-		console.log(err)
-		throw new Error(`400 : Delete job history is not successfully`)
-	}
-}
-
 export default {
 	srvFindCarrierByIdentifier,
 	updateProfileCarrierAccount,
@@ -161,6 +140,4 @@ export default {
 	confirmedWithEmail,
 	deleteCarrierAccount,
 	deActivateCarrierAccount,
-	updateJobHistory,
-	deleteJobHistory,
 }

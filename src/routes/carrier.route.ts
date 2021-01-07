@@ -8,11 +8,10 @@ import {
 	deleteDTO,
 	identifierDTO,
 	whitelistupdateProfileDTO,
-	updateJobHistoryDTO,
 } from '../entities/dtos/carrier.dto'
 import * as Validator from '../helper/validate.helper'
 
-class CarrierRoutes {
+class CarrierRoute {
 	public prefix_route = '/carrier'
 
 	async routes(fastify: FastifyInstance, opts: FastifyPluginOptions, done: any) {
@@ -32,32 +31,6 @@ class CarrierRoutes {
 					console.log(param)
 					const data = await CarrierUsecase.srvFindCarrierByIdentifier(param)
 					return data
-				}, reply)
-				await reply
-			},
-		)
-
-		fastify.put(
-			`/srv/job/history/add`,
-			{ preValidation: [(fastify as any).verifyAuth] },
-			async (request, reply) => {
-				responseHandler(async () => {
-					const { identifier, job_id } = request.body as updateJobHistoryDTO
-					await CarrierUsecase.updateJobHistory(identifier, job_id)
-					return `200 : Update job history success`
-				}, reply)
-				await reply
-			},
-		)
-
-		fastify.delete(
-			`/srv/job/history/delete`,
-			{ preValidation: [(fastify as any).verifyAuth] },
-			async (request, reply) => {
-				responseHandler(async () => {
-					const { identifier, job_id } = request.body as updateJobHistoryDTO
-					await CarrierUsecase.deleteJobHistory(identifier, job_id)
-					return `200 : Delete job history success`
 				}, reply)
 				await reply
 			},
@@ -158,4 +131,4 @@ class CarrierRoutes {
 	}
 }
 
-export default CarrierRoutes
+export default CarrierRoute
