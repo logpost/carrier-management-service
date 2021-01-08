@@ -25,7 +25,7 @@ async function findProfileCarrierAccountByUsername(identifier: identifierDTO): P
 	throw new Error(`404 : username is not exist in database`)
 }
 
-async function createCarrierAccount(carrier_account: createDTO): Promise<string> {
+async function createCarrierAccount(carrier_account: createDTO): Promise<identifierDTO> {
 	const accountRepository = AccountRepository.getInstance()
 	let { username, password } = carrier_account
 	const account = await accountRepository.findCarrierByIdentifier({ username })
@@ -36,7 +36,7 @@ async function createCarrierAccount(carrier_account: createDTO): Promise<string>
 		try {
 			const carrier_id = await accountRepository.createCarrierAccount(carrier_account)
 			console.log('Create carrier account success: carrier_id is', carrier_id)
-			return `201 : Create carrier account is successfully`
+			return { carrier_id }
 		} catch (err) {
 			console.error(err)
 			throw new Error(`400 : Save data is not successfully`)

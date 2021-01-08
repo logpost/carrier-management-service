@@ -56,6 +56,7 @@ class AccountRepository {
 	}
 
 	public async createCarrierAccount(carrier_account: createDTO): Promise<string> {
+		console.log(carrier_account)
 		const mongooseModel = new this._model(carrier_account)
 		const { carrier_id } = await mongooseModel.save()
 		return carrier_id as string

@@ -28,6 +28,6 @@ db:
         username: null
         password: null
         host: localhost:27017
-        database: logpost
+        database: logpost-stag
         options: ?authSource=admin
         collection: carrier_account

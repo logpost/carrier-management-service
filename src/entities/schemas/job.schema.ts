@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 
 const JobSchema = new mongoose.Schema(
 	{
-		job_id: { type: String, required: true, index: true, unique: true },
+		job_id: { type: String, required: true, index: true, sparse: true },
 		type: { type: String, default: 'single', enum: ['single', 'group'] },
 	},
 	{
