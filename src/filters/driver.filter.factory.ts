@@ -1,45 +1,41 @@
 import { DriverInterface } from '../entities/interfaces/data/driver.interface'
 import { queryDriverDTO } from '../entities/dtos/driver.dto'
+import { TruckInterface } from 'src/entities/interfaces/data/truck.interface'
 
 class DriverFilterFactory {
 	private filterer = {
-		driver_id: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.driver_id.toString() === query)
+		driver_id: (driver: DriverInterface, query: string) => {
+			return driver.driver_id.toString() === query
 		},
-		name: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.name === query)
+		name: (driver: DriverInterface, query: string) => {
+			return driver.name === query
 		},
-		age: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.age === parseInt(query, 10))
+		age: (driver: DriverInterface, query: string) => {
+			return driver.age === parseInt(query, 10)
 		},
-		tel: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.tel === query)
+		tel: (driver: DriverInterface, query: string) => {
+			return driver.tel === query
 		},
-		driver_license: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.driver_license === query)
+		driver_license: (driver: DriverInterface, query: string) => {
+			return driver.driver_license === query
 		},
-		driver_license_type: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.driver_license_type === query)
+		driver_license_type: (driver: DriverInterface, query: string) => {
+			return driver.driver_license_type === query
 		},
-		identification_number: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.identification_number === query)
+		identification_number: (driver: DriverInterface, query: string) => {
+			return driver.identification_number === query
 		},
-		status: (drivers: DriverInterface[], query: string) => {
-			return drivers.filter((driver) => driver.status === parseInt(query, 10))
+		status: (driver: DriverInterface, query: string) => {
+			return driver.status === parseInt(query, 10)
 		},
-	}
+	} as any
 
 	public async filterByQuery(drivers: DriverInterface[], query: queryDriverDTO): Promise<DriverInterface[]> {
-		const promises = Object.keys(query).map(async (key) => {
-			drivers = await JSON.parse(
-				JSON.stringify(
-					this.filterer[key as keyof queryDriverDTO](drivers, query[key as keyof queryDriverDTO] as string),
-				),
-			)
+		return JSON.parse(JSON.stringify(drivers)).filter((driver: TruckInterface) => {
+			return Object.keys(query).every((key) => {
+				return this.filterer[key](driver, query[key as keyof queryDriverDTO] as string)
+			})
 		})
-		await Promise.all(promises)
-
-		return drivers
 	}
 }
 

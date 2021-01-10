@@ -3,47 +3,44 @@ import { queryTruckDTO } from '../entities/dtos/truck.dto'
 
 class TruckFilterFactory {
 	public filterer = {
-		truck_id: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.truck_id.toString() === query)
+		truck_id: (truck: TruckInterface, query: string) => {
+			return truck.truck_id.toString() === query
 		},
-		license_number: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.license_number === query)
+		license_number: (truck: TruckInterface, query: string) => {
+			return truck.license_number === query
 		},
-		gasoline: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.gasoline === query)
+		gasoline: (truck: TruckInterface, query: string) => {
+			return truck.gasoline === query
 		},
-		age: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.age === parseInt(query, 10))
+		age: (truck: TruckInterface, query: string) => {
+			return truck.age === parseInt(query, 10)
 		},
-		is_insure: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.is_insure === (query === 'true'))
+		is_insure: (truck: TruckInterface, query: string) => {
+			return truck.is_insure === (query === 'true')
 		},
-		'property.type': (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.property.type === query)
+		'property.type': (truck: TruckInterface, query: string) => {
+			return truck.property.type === query
 		},
-		'property.option': (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.property.option === query)
+		'property.option': (truck: TruckInterface, query: string) => {
+			return truck.property.option === query
 		},
-		'property.chassis': (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.property.chassis === parseInt(query, 10))
+		'property.chassis': (truck: TruckInterface, query: string) => {
+			return truck.property.chassis === parseInt(query, 10)
 		},
-		weight: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.weight === query)
+		weight: (truck: TruckInterface, query: string) => {
+			return truck.weight === query
 		},
-		status: (trucks: TruckInterface[], query: string) => {
-			return trucks.filter((truck) => truck.status === parseInt(query, 10))
+		status: (truck: TruckInterface, query: string) => {
+			return truck.status === parseInt(query, 10)
 		},
 	} as any
 
 	public async filterByQuery(trucks: TruckInterface[], query: queryTruckDTO): Promise<TruckInterface[]> {
-		const promises = Object.keys(query).map(async (key: any) => {
-			trucks = await JSON.parse(
-				JSON.stringify(this.filterer[key](trucks, query[key as keyof queryTruckDTO] as string)),
-			)
+		return JSON.parse(JSON.stringify(trucks)).filter((truck: TruckInterface) => {
+			return Object.keys(query).every((key) => {
+				return this.filterer[key](truck, query[key as keyof queryTruckDTO] as string)
+			})
 		})
-		await Promise.all(promises)
-
-		return trucks
 	}
 }
 

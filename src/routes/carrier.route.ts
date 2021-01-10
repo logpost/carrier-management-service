@@ -28,7 +28,6 @@ class CarrierRoute {
 			async (request, reply) => {
 				responseHandler(async () => {
 					const param: identifierDTO = request.params as identifierDTO
-					console.log(param)
 					const data = await CarrierUsecase.srvFindCarrierByIdentifier(param)
 					return data
 				}, reply)
