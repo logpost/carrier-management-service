@@ -17,18 +17,14 @@ class JobRoutes {
 			await reply
 		})
 
-		fastify.delete(
-			`/srv/history/delete`,
-			{ preValidation: [(fastify as any).verifyAuth] },
-			async (request, reply) => {
-				responseHandler(async () => {
-					const { identifier, job_id } = request.body as updateJobHistoryDTO
-					await JobUsecase.deleteJobHistory(identifier, job_id)
-					return `200 : Delete job history success`
-				}, reply)
-				await reply
-			},
-		)
+		fastify.put(`/srv/history/delete`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+			responseHandler(async () => {
+				const { identifier, job_id } = request.body as updateJobHistoryDTO
+				await JobUsecase.deleteJobHistory(identifier, job_id)
+				return `200 : Delete job history success`
+			}, reply)
+			await reply
+		})
 
 		fastify.post(`/srv/history/all`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
 			responseHandler(async () => {
