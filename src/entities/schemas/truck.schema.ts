@@ -28,11 +28,11 @@ const TruckSchema = new mongoose.Schema(
 		truck_id: { type: mongoose.Schema.Types.ObjectId, index: true, required: true, auto: true },
 		license_number: { type: String, default: null, trim: true },
 		gasoline: { type: String, default: null, trim: true },
-		age: { type: Number, max: 10, default: 0 },
 		is_insure: { type: Boolean, default: false },
 		property: { type: TruckPropertySchema },
 		weight: { type: TruckWeightSchema },
 		status: { type: Number, default: 100, enum: [100, 200, 300], required: true },
+		registered_at: { type: Date, required: true },
 	},
 	{
 		_id: false,

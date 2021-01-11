@@ -13,7 +13,7 @@ export interface TruckInterface {
 	truck_id: string
 	license_number: string
 	gasoline: string
-	age: number
+	registered_at: Date
 	is_insure: boolean
 	status: number
 	property: TruckPropertyInterface

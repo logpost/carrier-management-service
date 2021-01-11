@@ -4,7 +4,7 @@ import { identifierDTO as CarrierIdentifier } from './carrier.dto'
 interface createTruckDTO {
 	license_number: string
 	gasoline: string
-	age: number
+	registered_at: Date
 	is_insure: boolean
 	property: TruckPropertyInterface
 	weight: TruckWeightInterface
@@ -16,7 +16,7 @@ interface deleteTruckDTO {
 interface whitelistUpdateTruckDTO {
 	license_number?: string
 	gasoline?: string
-	age?: number
+	registered_at?: Date
 	is_insure?: boolean
 	status?: number
 	property?: TruckPropertyInterface
@@ -36,7 +36,7 @@ interface queryTruckDTO {
 	truck_id?: string
 	license_number?: string
 	gasoline?: string | string
-	age?: number
+	registered_at?: Date
 	is_insure?: boolean | string
 	property?: TruckPropertyInterface
 	weight?: TruckWeightInterface

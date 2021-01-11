@@ -12,8 +12,8 @@ class TruckFilterFactory {
 		gasoline: (truck: TruckInterface, query: string) => {
 			return truck.gasoline === query
 		},
-		age: (truck: TruckInterface, query: string) => {
-			return truck.age === parseInt(query, 10)
+		registered_at: (truck: TruckInterface, query: string) => {
+			return new Date(truck.registered_at).getTime() === new Date(query).getTime()
 		},
 		is_insure: (truck: TruckInterface, query: string) => {
 			return truck.is_insure === (query === 'true')
