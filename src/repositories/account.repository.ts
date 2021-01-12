@@ -7,7 +7,7 @@ import { JobInterface } from '../entities/interfaces/data/job.interface'
 import { CarrierSchema } from '../entities/schemas/carrier.schema'
 import { createTruckDTO } from '../entities/dtos/truck.dto'
 import { createDriverDTO } from 'src/entities/dtos/driver.dto'
-import { createDTO, identifierDTO, whitelistupdateProfileDTO } from '../entities/dtos/carrier.dto'
+import { createDTO, identifierDTO, whitelistUpdateAccountProfileDTO } from '../entities/dtos/carrier.dto'
 
 class AccountRepository {
 	private static instance: AccountRepository
@@ -69,10 +69,10 @@ class AccountRepository {
 
 	public async updateProfileCarrierAccountByIdentifier(
 		identifier: identifierDTO,
-		profile: whitelistupdateProfileDTO,
-	): Promise<string> {
-		const { carrier_id } = await this._model.updateOne(identifier, { $set: profile })
-		return carrier_id as string
+		profile: whitelistUpdateAccountProfileDTO,
+	): Promise<number> {
+		const result = await this._model.updateOne(identifier, { $set: profile })
+		return result.n
 	}
 
 	public async deleteCarrierAccount(identifier: identifierDTO): Promise<number> {

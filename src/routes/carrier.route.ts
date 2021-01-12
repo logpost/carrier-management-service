@@ -7,7 +7,9 @@ import {
 	confirmedEmailDTO,
 	deleteDTO,
 	identifierDTO,
-	whitelistupdateProfileDTO,
+	whitelistUpdateProfileForCarrierDTO,
+	whitelistUpdateProfileForSrvDTO,
+	updateProfileDTO,
 } from '../entities/dtos/carrier.dto'
 import * as Validator from '../helper/validate.helper'
 
@@ -41,6 +43,31 @@ class CarrierRoute {
 				let { email, ...carrier_account } = req
 				const data = await CarrierUsecase.createCarrierAccount(carrier_account)
 				return data
+			}, reply)
+			await reply
+		})
+
+		fastify.put(`/srv/profile/update`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+			responseHandler(async () => {
+				const { role } = request.user as Payload
+				if (role === 'srv') {
+					const account: updateProfileDTO = request.body as updateProfileDTO
+					const { identifier, profile } = account
+					if (identifier.username || identifier.carrier_id) {
+						const errorFieldsUpdate = Validator.validUpdatedFields(
+							profile as whitelistUpdateProfileForSrvDTO,
+							'carrier_srv',
+						)
+						if (errorFieldsUpdate.length > 0)
+							throw new Error(`400 : Invalid Fields! ${errorFieldsUpdate.join(', ')}`)
+					} else {
+						throw new Error(`400 : Invalid input, Input not exist account id or password field`)
+					}
+
+					const data = await CarrierUsecase.updateProfileCarrierAccount(account)
+					return data
+				}
+				throw new Error(`403 : You havn't permission in this endpoint, pls contract admin.`)
 			}, reply)
 			await reply
 		})
@@ -110,7 +137,7 @@ class CarrierRoute {
 			responseHandler(async () => {
 				const { username } = request.user as Payload
 				const identifier: identifierDTO = { username }
-				const profile: whitelistupdateProfileDTO = request.body as whitelistupdateProfileDTO
+				const profile: whitelistUpdateProfileForCarrierDTO = request.body as whitelistUpdateProfileForCarrierDTO
 
 				if (identifier.username || identifier.carrier_id) {
 					const errorFieldsUpdate = Validator.validUpdatedFields(profile, 'carrier')

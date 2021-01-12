@@ -9,4 +9,11 @@ export const whitelist: Whitelists = {
 		account_description: { field: 'account_description' },
 		juristic_id: { field: 'juristic_id' },
 	},
+	carrier_srv: {
+		username: { field: 'username' },
+		password: { field: 'password' },
+		email: { field: 'email' },
+		verified: { field: 'verified' },
+		account_type: { field: 'account_type' },
+	},
 }

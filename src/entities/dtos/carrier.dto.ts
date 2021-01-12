@@ -33,10 +33,16 @@ interface deleteDTO {
 
 interface updateProfileDTO {
 	identifier: identifierDTO
-	profile: whitelistupdateProfileDTO
+	profile: whitelistUpdateAccountProfileDTO
 }
-
-interface whitelistupdateProfileDTO {
+interface whitelistUpdateProfileForSrvDTO {
+	username?: string
+	password?: string
+	email?: string
+	verified?: boolean
+	account_type?: string
+}
+interface whitelistUpdateProfileForCarrierDTO {
 	name?: string
 	display_name?: string
 	tel?: string
@@ -45,4 +51,15 @@ interface whitelistupdateProfileDTO {
 	juristic_id?: string
 }
 
-export { createDTO, updateProfileDTO, whitelistupdateProfileDTO, deleteDTO, confirmedEmailDTO, identifierDTO }
+type whitelistUpdateAccountProfileDTO = whitelistUpdateProfileForCarrierDTO | whitelistUpdateProfileForSrvDTO
+
+export {
+	createDTO,
+	updateProfileDTO,
+	whitelistUpdateProfileForCarrierDTO,
+	whitelistUpdateProfileForSrvDTO,
+	whitelistUpdateAccountProfileDTO,
+	deleteDTO,
+	confirmedEmailDTO,
+	identifierDTO,
+}

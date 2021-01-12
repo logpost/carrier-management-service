@@ -1,7 +1,14 @@
 import { CarrierInterface } from '../entities/interfaces/data/carrier.interface'
 import AccountRepository from '../repositories/account.repository'
 import { hashing, compareHashed } from '../helper/hashing.handler'
-import { createDTO, confirmedEmailDTO, identifierDTO, updateProfileDTO, deleteDTO } from '../entities/dtos/carrier.dto'
+import {
+	createDTO,
+	confirmedEmailDTO,
+	identifierDTO,
+	updateProfileDTO,
+	deleteDTO,
+	whitelistUpdateProfileForSrvDTO,
+} from '../entities/dtos/carrier.dto'
 
 async function srvFindCarrierByIdentifier(identifier: identifierDTO): Promise<CarrierInterface> {
 	try {
@@ -66,9 +73,14 @@ async function updateProfileCarrierAccount(req: updateProfileDTO): Promise<strin
 	const accountRepository = AccountRepository.getInstance()
 	const { identifier, profile } = req
 
+	if ((profile as whitelistUpdateProfileForSrvDTO)?.password) {
+		const { password } = profile as whitelistUpdateProfileForSrvDTO
+		;(profile as whitelistUpdateProfileForSrvDTO).password = await hashing(password as string)
+	}
 	try {
-		await accountRepository.updateProfileCarrierAccountByIdentifier(identifier, profile)
-		return `204 : Updated, Profile is update successfully`
+		const n = await accountRepository.updateProfileCarrierAccountByIdentifier(identifier, profile)
+		if (n && n > 0) return `204 : Updated, Profile is update successfully`
+		else throw new Error(`400 : Update profile is not successfully`)
 	} catch (error) {
 		console.error(error)
 		throw new Error(`400 : Update profile is not successfully`)
