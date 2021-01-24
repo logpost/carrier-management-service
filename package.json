@@ -24,6 +24,7 @@
 	},
 	"homepage": "https://github.com/logpost/carrier-management-service#readme",
 	"dependencies": {
+		"@google-cloud/profiler": "^4.1.0",
 		"axios": "^0.19.2",
 		"bcrypt": "^5.0.0",
 		"config-yaml": "^1.1.4",
