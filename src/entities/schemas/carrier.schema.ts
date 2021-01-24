@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose'
 import TruckSchema from './truck.schema'
 import DriverSchema from './driver.schema'
 import JobSchema from './job.schema'
+import AddressSchema from './address.schema'
 
 export const CarrierSchema = new mongoose.Schema(
 	{
@@ -12,7 +13,7 @@ export const CarrierSchema = new mongoose.Schema(
 		name: { type: String, required: true, unique: true },
 		display_name: { type: String, default: null },
 		account_description: { type: String, default: null },
-		address: { type: String, default: null },
+		address: { type: AddressSchema, default: null },
 		verified: { type: Boolean, default: false },
 		role: { type: String, default: 'carrier' },
 		account_type: {
