@@ -24,18 +24,14 @@ class CarrierRoute {
 			await reply
 		})
 
-		fastify.get(
-			`/srv/profile/:username`,
-			{ preValidation: [(fastify as any).verifyAuth] },
-			async (request, reply) => {
-				responseHandler(async () => {
-					const param: identifierDTO = request.params as identifierDTO
-					const data = await CarrierUsecase.srvFindCarrierByIdentifier(param)
-					return data
-				}, reply)
-				await reply
-			},
-		)
+		fastify.get(`/srv/profile`, { preValidation: [(fastify as any).verifyAuth] }, async (request, reply) => {
+			responseHandler(async () => {
+				const identifier: identifierDTO = request.query as identifierDTO
+				const data = await CarrierUsecase.srvFindCarrierByIdentifier(identifier)
+				return data
+			}, reply)
+			await reply
+		})
 
 		fastify.post(`/srv/create`, async (request, reply) => {
 			responseHandler(async () => {
@@ -79,9 +75,7 @@ class CarrierRoute {
 			async (request, reply) => {
 				responseHandler(async () => {
 					const req: confirmedEmailDTO = request.body as confirmedEmailDTO
-					let { email, identifier } = req
-
-					if (!email) throw new Error(`400 : Invalid input, Please input field email`)
+					let { identifier } = req
 
 					if ('username' in identifier || 'carrier_id' in identifier) {
 						const data = await CarrierUsecase.confirmedWithEmail(req)

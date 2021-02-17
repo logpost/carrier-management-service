@@ -1,20 +1,25 @@
-import { v4 as uuidv4 } from 'uuid'
 import * as mongoose from 'mongoose'
-import TruckSchema from './truck.schema'
+import { v4 as uuidv4 } from 'uuid'
+
+import AddressSchema from './address.schema'
 import DriverSchema from './driver.schema'
 import JobSchema from './job.schema'
-import AddressSchema from './address.schema'
+import OAuth2Schema from './oauth2.schema'
+import TruckSchema from './truck.schema'
 
 export const CarrierSchema = new mongoose.Schema(
 	{
 		carrier_id: { type: String, default: uuidv4, index: true },
 		username: { type: String, required: true, unique: true },
+		email: { type: String, required: true, index: true, trim: true },
+		oauth2: { type: OAuth2Schema, default: () => ({}) },
 		password: { type: String, required: true },
-		name: { type: String, required: true, unique: true },
+		name: { type: String, required: true },
 		display_name: { type: String, default: null },
 		account_description: { type: String, default: null },
 		address: { type: AddressSchema, default: null },
-		verified: { type: Boolean, default: false },
+		is_email_confirmed: { type: Boolean, default: false },
+		is_verified: { type: Boolean, default: false },
 		role: { type: String, default: 'carrier' },
 		account_type: {
 			type: String,
@@ -24,7 +29,6 @@ export const CarrierSchema = new mongoose.Schema(
 			trim: true,
 			lowercase: true,
 		},
-		email: { type: String, default: 'not_confirm', trim: true },
 		tel: { type: String, default: null, trim: true },
 		juristic_id: { type: String, default: null, trim: true },
 		job_history: { type: [JobSchema], default: null },

@@ -18,7 +18,7 @@ async function srvFindCarrierByIdentifier(identifier: identifierDTO): Promise<Ca
 	} catch (error) {
 		throw new Error(`400 : Save data is not successfully`)
 	}
-	throw new Error(`404 : username is not exist in database`)
+	throw new Error(`404 : Uername or email is not exist in database`)
 }
 
 async function findProfileCarrierAccountByUsername(identifier: identifierDTO): Promise<CarrierInterface> {
@@ -29,7 +29,7 @@ async function findProfileCarrierAccountByUsername(identifier: identifierDTO): P
 	} catch (error) {
 		throw new Error(`400 : Save data is not successfully`)
 	}
-	throw new Error(`404 : username is not exist in database`)
+	throw new Error(`404 : Username is not exist in database`)
 }
 
 async function createCarrierAccount(carrier_account: createDTO): Promise<identifierDTO> {
@@ -54,12 +54,12 @@ async function createCarrierAccount(carrier_account: createDTO): Promise<identif
 
 async function confirmedWithEmail(req: confirmedEmailDTO): Promise<string> {
 	const accountRepository = AccountRepository.getInstance()
-	let { identifier, email } = req
+	let { identifier } = req
 	const account = await accountRepository.findCarrierByIdentifier(identifier)
 
 	if (account) {
 		try {
-			await accountRepository.updateEmailByIdentifier(identifier, email)
+			await accountRepository.updateEmailByIdentifier(identifier)
 			return `204 : Comfirmed, Email is update successfully`
 		} catch (error) {
 			console.error(error)

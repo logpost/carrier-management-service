@@ -13,7 +13,8 @@ export const whitelist: Whitelists = {
 		username: { field: 'username' },
 		password: { field: 'password' },
 		email: { field: 'email' },
-		verified: { field: 'verified' },
+		is_email_confirmed: { field: 'is_email_confirmed' },
+		is_verified: { field: 'is_verified' },
 		account_type: { field: 'account_type' },
 	},
 }

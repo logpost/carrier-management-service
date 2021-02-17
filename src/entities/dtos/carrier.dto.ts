@@ -1,9 +1,11 @@
 import { JobInterface } from '../interfaces/data/job.interface'
 import { AddressInterface } from '../interfaces/data/address.interface'
+import { OAuth2Interface } from '../interfaces/data/oauth2.interface'
 interface createDTO {
 	username: string
 	password: string
 	email?: string
+	oauth2?: OAuth2Interface
 	name: string
 	display_name?: string
 	tel?: string
@@ -12,7 +14,8 @@ interface createDTO {
 	account_type: string
 	account_description?: string
 	juristic_id?: string
-	verified?: boolean
+	is_email_confirmed?: boolean
+	is_verified?: boolean
 	job_history?: JobInterface[]
 	create_at?: Date
 }
@@ -20,6 +23,7 @@ interface createDTO {
 interface identifierDTO {
 	carrier_id?: string
 	username?: string
+	email?: string
 }
 
 interface confirmedEmailDTO {
@@ -40,7 +44,8 @@ interface whitelistUpdateProfileForSrvDTO {
 	username?: string
 	password?: string
 	email?: string
-	verified?: boolean
+	is_email_confirmed?: boolean
+	is_verified?: boolean
 	account_type?: string
 }
 interface whitelistUpdateProfileForCarrierDTO {

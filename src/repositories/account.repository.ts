@@ -62,8 +62,8 @@ class AccountRepository {
 		return carrier_id as string
 	}
 
-	public async updateEmailByIdentifier(identifier: identifierDTO, email: string): Promise<string> {
-		const { carrier_id } = await this._model.updateOne(identifier, { $set: { email } })
+	public async updateEmailByIdentifier(identifier: identifierDTO): Promise<string> {
+		const { carrier_id } = await this._model.updateOne(identifier, { $set: { is_email_confirmed: true } })
 		return carrier_id as string
 	}
 
