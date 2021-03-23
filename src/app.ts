@@ -6,6 +6,8 @@ class App {
 	public app: FastifyInstance
 	public app_kind: string = config.app.kind
 	public app_base_url: string = config.app.base_url
+	public app_doamain: string = config.app.domain
+	public IS_CONTAINER_APP: boolean = config.app.is_container_app
 	public app_port: number | string = process.env.PORT || (parseInt(`${config.app.port}`, 10) ?? 8080)
 	public app_address: string
 
@@ -15,7 +17,7 @@ class App {
 
 	constructor(appInit: { plugins: any; routes: any }) {
 		this.app = fastify({ logger: true, trustProxy: true })
-		this.app_address = this.IS_GOOGLE_CLOUD_RUN ? '0.0.0.0' : '127.0.0.1'
+		this.app_address = this.IS_GOOGLE_CLOUD_RUN || this.IS_CONTAINER_APP ? '0.0.0.0' : '127.0.0.1'
 		this.connectDatabase()
 		this.pluginsRegister(appInit.plugins)
 		this.routes(appInit.routes)
@@ -41,7 +43,7 @@ class App {
 	public listen() {
 		this.app.listen(this.app_port, this.app_address, () => {
 			console.log(`Carrier Management Service 🚚 `)
-			console.log(`Listening on the ${this.app_base_url} 🌟`)
+			console.log(`Listening on the http://${this.app_doamain}:${this.app_port} 🌟`)
 			console.log(`Working on ${this.app_kind.toUpperCase()} ENVIRONMENT 👻`)
 		})
 	}

@@ -1,17 +1,18 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
-import CarrierUsecase from '../usecase/carrier.usecase'
-import responseHandler from '../helper/response.handler'
-import { Payload } from '../entities/dtos/token.dto'
+
 import {
-	createDTO,
 	confirmedEmailDTO,
+	createDTO,
 	deleteDTO,
 	identifierDTO,
+	updateProfileDTO,
 	whitelistUpdateProfileForCarrierDTO,
 	whitelistUpdateProfileForSrvDTO,
-	updateProfileDTO,
 } from '../entities/dtos/carrier.dto'
+import { Payload } from '../entities/dtos/token.dto'
+import responseHandler from '../helper/response.handler'
 import * as Validator from '../helper/validate.helper'
+import CarrierUsecase from '../usecase/carrier.usecase'
 
 class CarrierRoute {
 	public prefix_route = '/carrier'
@@ -35,8 +36,8 @@ class CarrierRoute {
 
 		fastify.post(`/srv/create`, async (request, reply) => {
 			responseHandler(async () => {
-				const req: createDTO = request.body as createDTO
-				let { email, ...carrier_account } = req
+				const carrier_account: createDTO = request.body as createDTO
+				// let { email, ...carrier_account } = req
 				const data = await CarrierUsecase.createCarrierAccount(carrier_account)
 				return data
 			}, reply)

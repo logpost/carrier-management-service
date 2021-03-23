@@ -42,7 +42,7 @@ async function createCarrierAccount(carrier_account: createDTO): Promise<identif
 		else throw new Error(`400 : Invalid input, Please input field password`)
 		try {
 			const carrier_id = await accountRepository.createCarrierAccount(carrier_account)
-			console.log('Create carrier account success: carrier_id is', carrier_id)
+			// console.log('Create carrier account success: carrier_id is', carrier_id)
 			return { carrier_id }
 		} catch (err) {
 			console.error(err)
