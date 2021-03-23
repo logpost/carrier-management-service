@@ -1,14 +1,7 @@
+import { confirmedEmailDTO, createDTO, deleteDTO, identifierDTO, updateProfileDTO, whitelistUpdateProfileForSrvDTO } from '../entities/dtos/carrier.dto'
 import { CarrierInterface } from '../entities/interfaces/data/carrier.interface'
+import { compareHashed, hashing } from '../helper/hashing.handler'
 import AccountRepository from '../repositories/account.repository'
-import { hashing, compareHashed } from '../helper/hashing.handler'
-import {
-	createDTO,
-	confirmedEmailDTO,
-	identifierDTO,
-	updateProfileDTO,
-	deleteDTO,
-	whitelistUpdateProfileForSrvDTO,
-} from '../entities/dtos/carrier.dto'
 
 async function srvFindCarrierByIdentifier(identifier: identifierDTO): Promise<CarrierInterface> {
 	try {
