@@ -29,7 +29,7 @@
 		"bcrypt": "^5.0.0",
 		"config-yaml": "^1.1.4",
 		"dotenv": "^8.2.0",
-		"fastify": "^3.7.0",
+		"fastify": "^3.29.4",
 		"fastify-auth": "^1.0.1",
 		"fastify-cors": "^5.1.0",
 		"fastify-jwt": "^2.1.3",
